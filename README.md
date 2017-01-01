@@ -8,7 +8,7 @@
 - An audio options and manager component in inspector view 
 -	Persistent singleton class call from code (no prefabs needed)
 -	Static function calls with callbacks 
--	3 background music transition effects (Swift, LinearFade & CrossFade)
+-	3 background music transition effects (Swift, Linear Fade & Cross Fade)
 -	Control of all sound effects in game without tags
 -	Integration with AudioMixerGroups
 -	Built-in sound pool for looping or repeating sounds
@@ -20,7 +20,7 @@ Import the **AudioManager-Papae2D-AudioEngine.unitypackage** or copy the **Papae
 
 
 ## Usage
-1.  Drag and drop the **AudioManager.prefab** gameobject anywhere in the scene or herirachy, edit any properties visible in the Inspector then call any API related function or attribute from code attribute
+1.  Drag and drop the **AudioManager.prefab** gameobject anywhere in the scene or hierarchy, edit any properties visible in the Inspector then call any API related function or attribute from code
 
 2.  Attach or add the **AudioManager.cs** class as a component to an empty game object in the scene, edit any properties visible in the Inspector then call any API related function or attribute from code
 
