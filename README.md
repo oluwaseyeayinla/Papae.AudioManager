@@ -1,7 +1,7 @@
 # AudioManager (Papae2D.AudioEngine)
 A simple way to manage and control your 2D game’s background music and sound effects
 
-![AudioManager - Papae2D.AudioEngine](https://www.instagram.com/p/BOvKOQkFAH1/?taken-by=oluwaseyeayinla)
+![AudioManager - Papae2D.AudioEngine](https://www.instagram.com/p/BOvKOQkFAH1/)
 
 **AudioManager** is a simple way to manage and control your 2D game’s background music and sound effects
 
