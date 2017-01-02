@@ -16,7 +16,7 @@
 -	Fully commented code for understanding
 
 ## Installation
-Import the **AudioManager-Papae2D-AudioEngine.unitypackage** or copy the **Papae2D/AudioEngine/AudioManager** folder with it's contents anywhere into your project folder and you are ready to go.
+Import the **Papae2D-AudioEngine-AudioManager.unitypackage** or copy the **Papae2D/AudioEngine/AudioManager** folder with it's contents anywhere into your project folder and you are ready to go.
 
 
 ## Usage
@@ -29,19 +29,26 @@ Import the **AudioManager-Papae2D-AudioEngine.unitypackage** or copy the **Papae
 Note that you have to import the namespace **Papae2D.AudioEngine** to use the AudioManager in script
 
 
-### Fade In and Fade Out
-> AudioManager.PlayBGM(clip, MusicTransition.LinearFade, 3f);
+### Fade out the current music and fade in the next music within 4 seconds
+> AudioManager.PlayBGM(sound_clip, MusicTransition.LinearFade, 4f);
 
-### Play a Sound Effect for 10 secs
-> AudioManager.PlaySFX(clip, duration);
+### Play a sound clip for the duration of 10 seconds
+> AudioManager.PlaySFX(sound_clip, 10f);
 
-### Loop or Repeat a Sound at a particular location 5 times
-> AudioManager.RepeatSFX(clip, 5, worldLocation);
+### Loop or repeat a sound at a particular location 5 times
+> AudioManager.RepeatSFX(sound_clip, 5, world_location);
 
-Read the [API Reference](https://github.com/JackM36/Eazy-Sound-Manager/wiki) for more information.
+### Play a sound clip and track its progress from the repeat pool
+> AudioManager.PlaySFX(sound_clip, 120f, world_location, true);
+
+### Play a sound clip from the stored asset list once
+> AudioManager.PlayOneShot(AudioManager.GetClipFromAssetList(clip_name));
 
 
-## Contributors
+Read the [API Reference](https://oluwaseyeayinla.github.io/papae2d/audio_engine/audio_manager/api_reference/html/annotated.html) for more information.
+
+
+## Authors
 - Oluwaseye Ayinla (https://github.com/oluwaseyeayinla)
 
 
