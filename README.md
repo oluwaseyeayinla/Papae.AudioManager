@@ -1,5 +1,5 @@
 # AudioManager (Papae2D.AudioEngine)
-![AudioManager - Papae2D.AudioEngine](https://scontent-lhr3-1.xx.fbcdn.net/v/t1.0-9/15873504_1276004475776287_5532099008590403853_n.jpg?oh=254ed9ac001590d67511b9beaf2b96db&oe=58EC50C7)
+![AudioManager - Papae2D.AudioEngine](https://github.com/oluwaseyeayinla/oluwaseyeayinla.github.io/blob/master/papae2d/audio_engine/audio_manager/promotional_images/860-x-389.jpg)
 
 **AudioManager** is a Unity package for 2D games. It provides a simple way to manage and control your 2D game’s background music and sound effects.
 
