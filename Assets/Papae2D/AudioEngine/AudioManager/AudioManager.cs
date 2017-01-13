@@ -160,6 +160,13 @@ namespace Papae2D.AudioEngine
             get { return Instance.soundAssets; }
         }
 
+		/// <summary>
+		/// Is the AudioManager processing any background music
+		/// </summary>
+		public static bool NoMusicIsBeingPlayed
+		{
+			get {return Instance.backgroundMusic.currentClip == null; }
+		}
         #endregion
 
 
@@ -548,11 +555,9 @@ namespace Papae2D.AudioEngine
                 return;
             }
 
-            // Save the transition effect to be handled by the internal manager
-            Instance.backgroundMusic.transition = transition;
 
             // Start playing from the beginning if there is no effect mode
-            if (Instance.backgroundMusic.transition == MusicTransition.Swift)
+            if (transition == MusicTransition.Swift)
             {
                 PlayBackgroundMusic(clip, 0);
             }
@@ -564,6 +569,9 @@ namespace Papae2D.AudioEngine
                     Debug.LogWarning("Trying to perform a transition on the background music while one is still active");
                     return;
                 }
+
+				// Save the transition effect to be handled by the internal manager
+				Instance.backgroundMusic.transition = transition;
 
                 transitionTime = Instance.backgroundMusic.transitionDuration = transition_duration;
                 // Register the music volume limit or cap when transitioning
@@ -711,7 +719,7 @@ namespace Papae2D.AudioEngine
             // Parent it to the AudioManager until further notice
             host.transform.SetParent(Instance.transform);
             // Specity a tag for future use
-            host.AddComponent<SoundEFfectTag>();
+            host.AddComponent<SoundEffectTag>();
 
             // Add an audio source to that host
             AudioSource audioSource = host.AddComponent<AudioSource>() as AudioSource;
@@ -936,7 +944,7 @@ namespace Papae2D.AudioEngine
         {
             AudioSource source;
             // Loop through all sound effects with the SoundEffectTag and update their properties
-            foreach (SoundEFfectTag t in FindObjectsOfType<SoundEFfectTag>())
+            foreach (SoundEffectTag t in FindObjectsOfType<SoundEffectTag>())
             {
                 source = t.GetComponent<AudioSource>();
                 if (source.isPlaying) source.Pause();
@@ -951,7 +959,7 @@ namespace Papae2D.AudioEngine
         {
             AudioSource source;
             /// Loop through all sound effects with the SoundEffectTag and update their properties
-            foreach (SoundEFfectTag t in FindObjectsOfType<SoundEFfectTag>())
+            foreach (SoundEffectTag t in FindObjectsOfType<SoundEffectTag>())
             {
                 source = t.GetComponent<AudioSource>();
                 if (!source.isPlaying) source.UnPause();
@@ -1091,7 +1099,7 @@ namespace Papae2D.AudioEngine
 
             AudioSource source;
             // Loop through all sound effects with the SoundEffectTag and update their properties
-            foreach (SoundEFfectTag t in FindObjectsOfType<SoundEFfectTag>())
+            foreach (SoundEffectTag t in FindObjectsOfType<SoundEffectTag>())
             {
                 source = t.GetComponent<AudioSource>();
                 source.mute = !Options.soundFxOn;
@@ -1147,7 +1155,7 @@ namespace Papae2D.AudioEngine
 
                 AudioSource source;
                 // Loop through all sound effects with the SoundEffectTag and update their properties
-                foreach (SoundEFfectTag t in FindObjectsOfType<SoundEFfectTag>())
+                foreach (SoundEffectTag t in FindObjectsOfType<SoundEffectTag>())
                 {
                     source = t.GetComponent<AudioSource>();
                     source.volume = currentSfxVol;

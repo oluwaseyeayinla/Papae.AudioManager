@@ -157,7 +157,7 @@ namespace Papae2D.AudioEngine
     /// Tag attached to all sound effects. This is my simply way of not using tags. 
     /// I find that I forget to add the required tag in the Tags and Layers Editor 
     /// </summary>
-    public class SoundEFfectTag : MonoBehaviour
+    public class SoundEffectTag : MonoBehaviour
     {
 
     }
