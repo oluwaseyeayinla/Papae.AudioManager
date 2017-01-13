@@ -51,6 +51,8 @@ Read the [API Reference](https://oluwaseyeayinla.github.io/papae2d/audio_engine/
 ## Authors
 - Oluwaseye Ayinla (https://github.com/oluwaseyeayinla)
 
+## Current Version
+Version 1.0.1
 
 ## License
 MIT License. Copyright 2016 Oluwaseye Ayinla.
