@@ -1,5 +1,5 @@
 # Papae-AudioManager
-![AudioManager - Papae2D.AudioEngine](http://github.com/oluwaseyeayinla/oluwaseyeayinla.github.io/tree/master/papae/audio_manager/promotional_images/860-x-389.jpg)
+![AudioManager - Papae2D.AudioEngine](https://github.com/oluwaseyeayinla/oluwaseyeayinla.github.io/blob/master/papae/audio_manager/promotional_images/860-x-389.jpg)
 
 **AudioManager** is a free unity library for audio. It provides a simple way for programmers to manage and control your 2D game’s background music and sound effects.
 
@@ -52,7 +52,7 @@ Note: You can also use the PlaySFX to loop a sound forever. Just pass the float.
 > AudioManager.Instance.LoadClip(url_string, AudioType.WAV, false, callback);
 
 
-Read the [API Reference](http://github.com/oluwaseyeayinla/oluwaseyeayinla.github.io/tree/master/papae/audio_manager/api_reference/html/annotated.html) for more information.
+Read the [API Reference](https://oluwaseyeayinla.github.io/papae/audio_manager/api_reference/html/annotated.html) for more information.
 
 
 ## Authors
