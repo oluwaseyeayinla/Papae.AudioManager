@@ -59,7 +59,7 @@ Read the [API Reference](https://oluwaseyeayinla.github.io/papae/audio_manager/a
 - Oluwaseye Ayinla (https://github.com/oluwaseyeayinla)
 
 ## Current Version
-Version 1.3.0
+Version 1.3.1
 
 ## License
 MIT License. Copyright 2016 Oluwaseye Ayinla.
