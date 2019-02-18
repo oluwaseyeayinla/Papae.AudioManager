@@ -60,12 +60,13 @@ namespace Papae.UnitySDK.Managers
 		// TODO :: consider making the Sound Effect multifaceted / multifunctional
 		// meaning you can add a sound effect as a monobehaviour to do other functions
 		// like allow a sound effect play a sound or respond to events
-		private AudioSource audioSource;
-		private float originalVolume;
-		private float duration;
-		private float time;
-		private Action callback;
-		private bool singleton;
+        [SerializeField] private AudioSource audioSource;
+        [SerializeField] private float originalVolume;
+        [SerializeField] private float duration;
+        [SerializeField] private float playbackPosition;
+        [SerializeField] private float time;
+        [SerializeField] private Action callback;
+        [SerializeField] private bool singleton;
 
 		/// <summary>
 		/// Gets or sets the name of the sound effect.
@@ -506,15 +507,15 @@ namespace Papae.UnitySDK.Managers
 				SoundEffect sfx = sfxPool[i];
 				// edit as long as sound is playing and duration of sound effect is not set to forever
 				// meaning user has to manually stop the sound effect
-				if (sfx.Source.isPlaying && sfx.Time != float.PositiveInfinity)
+                if (sfx.Source.isPlaying && !float.IsPositiveInfinity(sfx.Time))
 				{
 					// Update the duration and return back to pool
 					sfx.Time -= Time.deltaTime;
 					sfxPool[i] = sfx;
 				}
 
-				// If time is up
-				if (sfxPool[i].Time <= 0.09f)
+                // If time is up :: also fixed cut issues here: previous threshold value was 0.09f
+                if (sfxPool[i].Time <= 0.0001f || HasPossiblyFinished(sfxPool[i]))
 				{
 					sfxPool[i].Source.Stop();
 					// Fire a callback function, if it has one
@@ -528,12 +529,21 @@ namespace Papae.UnitySDK.Managers
 
 					// Delete placeholder to host in the pool
 					sfxPool.RemoveAt(i);
-					// Re-order pool :: TODO :: try using a sorted list maybe it might automatically sort itself after deletion
-					sfxPool.Sort((x, y) => x.name.CompareTo(y.name));
 					break;
 				}
 			}
 		}
+
+        // This extra piece of code simple makes sure that the sound has cbeen ompleted
+        bool HasPossiblyFinished(SoundEffect soundEffect)
+        {
+            return !soundEffect.Source.isPlaying && FloatEquals(soundEffect.PlaybackPosition, 0) && soundEffect.Time <= 0.09f;
+        }
+
+        bool FloatEquals(float num1, float num2, float threshold = .0001f)
+        {
+            return Math.Abs(num1 - num2) < threshold;
+        }
 
 		/// <summary>
 		/// Returns true, if the music volume or the music mute status been changed
@@ -541,7 +551,7 @@ namespace Papae.UnitySDK.Managers
 		private bool IsMusicAltered()
 		{
 			// Get changed status of music mute or the music volume
-			bool flag = musicOn != _musicOn || musicOn != !musicSource.mute || currentMusicVol != _musicVolume;
+            bool flag = musicOn != _musicOn || musicOn != !musicSource.mute || !FloatEquals(currentMusicVol, _musicVolume);
 
 			// If music is using a mixer group
 			if (_musicMixerGroup != null && !string.IsNullOrEmpty(_volumeOfMusicMixer.Trim()))
@@ -552,7 +562,7 @@ namespace Papae.UnitySDK.Managers
 				// Make it a range of [0 - 1] to suit the music source volume and AudioManager volume
 				vol = NormaliseVolume(vol);
 
-				return flag || currentMusicVol != vol;
+                return flag || !FloatEquals(currentMusicVol, vol);
 			}
 
 			return flag;
@@ -564,7 +574,7 @@ namespace Papae.UnitySDK.Managers
 		private bool IsSoundFxAltered()
 		{
 			// Get changed status of sound effect mute or the sound effect volume
-			bool flag = _soundFxOn != sfxOn || currentSfxVol != _soundFxVolume;
+            bool flag = _soundFxOn != sfxOn || !FloatEquals(currentSfxVol, _soundFxVolume);
 
 			// If sound effect is using a mixer group
 			if (_soundFxMixerGroup != null && !string.IsNullOrEmpty(_volumeOfSFXMixer.Trim()))
@@ -575,7 +585,7 @@ namespace Papae.UnitySDK.Managers
 				// Make it a range of [0 - 1] to suit the AudioManager
 				vol = NormaliseVolume(vol);
 
-				return flag || currentSfxVol != vol;
+                return flag || !FloatEquals(currentSfxVol, vol);
 			}
 
 			return flag;
@@ -671,7 +681,7 @@ namespace Papae.UnitySDK.Managers
 					//musicSource.mute = !_musicOn;
 					ToggleBGMMute(!musicOn);
 
-					if (currentMusicVol != _musicVolume)
+                    if (!FloatEquals(currentMusicVol, _musicVolume))
 					{
 						currentMusicVol = _musicVolume;
 					}
@@ -693,7 +703,7 @@ namespace Papae.UnitySDK.Managers
 					//sfxOn = _soundFxOn;
 					ToggleSFXMute(!sfxOn);
 
-					if (currentSfxVol != _soundFxVolume)
+                    if (!FloatEquals(currentSfxVol,_soundFxVolume))
 					{
 						currentSfxVol = _soundFxVolume;
 					}
@@ -1393,13 +1403,13 @@ namespace Papae.UnitySDK.Managers
 		/// <param name="callback">Callback.</param>
 		IEnumerator LoadAudioClipFromUrl(string audio_url, AudioType audio_type, Action<AudioClip> callback)
 		{
-			using (UnityEngine.Networking.UnityWebRequest www = UnityEngine.Networking.UnityWebRequest.GetAudioClip(audio_url, audio_type))
+			using (UnityEngine.Networking.UnityWebRequest www = UnityEngine.Networking.UnityWebRequestMultimedia.GetAudioClip(audio_url, audio_type))
 			{
-				yield return www.Send();
+                yield return www.SendWebRequest();
 
-				if (www.isError)
+				if (www.isNetworkError)
 				{
-					Debug.Log(string.Format("Error downloading audio clip at {0} : ", audio_url, www.error));
+                    Debug.Log(string.Format("Error downloading audio clip at {0} : {1}", audio_url, www.error));
 				}
 
 				callback.Invoke(UnityEngine.Networking.DownloadHandlerAudioClip.GetContent(www));
