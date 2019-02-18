@@ -1,3 +1,6 @@
+###Version 1.3.1
+1. Fixed audio cut issues for one shot sound effects 
+
 ###Version 1.3.0
 1. Made script a single class
 2. Made API neater with standard conventions
